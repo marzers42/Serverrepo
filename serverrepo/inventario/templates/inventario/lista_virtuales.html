@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h2>Inventario de Servidores Virtuales</h2>
+<h1>Inventario de Servidores Virtuales</h1>
 
 <div class="d-flex justify-content-between mb-3">
 
@@ -12,6 +12,10 @@
 
 <a href="{% url 'agregar_virtual' %}" class="btn btn-success">
 Agregar Servidor
+</a>
+
+<a href="{% url 'subir_csv' %}" class="btn btn-info mb-3">
+Subir archivo CSV
 </a>
 
 {% endif %}
@@ -75,22 +79,23 @@ value="{{ query|default:'' }}">
 
 <tr>
 
-<td>{{ s.Nombre }}</td>
-<td>{{ s.IP_int }}</td>
+<td>{{ s.nombre }}</td>
+<td>{{ s.ip_int }}</td>
 
 {% if es_admin %}
 
-<td>{{ s.Hipervizor }}</td>
-<td>{{ s.O_S }}</td>
-<td>{{ s.Sede }}</td>
-<td>{{ s.CPU }}</td>
-<td>{{ s.Memoria_RAM }}</td>
-<td>{{ s.Almacenamiento }}</td>
+<td>{{ s.hipervizor }}</td>
+<td>{{ s.sistema_operativo }}</td>
+<td>{{ s.sede }}</td>
+<td>{{ s.cpu }}</td>
+<td>{{ s.memoria_ram }}</td>
+<td>{{ s.almacenamiento }}</td>
+<td>{{ s.documento }}</td>
 
 {% else %}
 
-<td>{{ s.A_cargo }}</td>
-<td>{{ s.Descripcion }}</td>
+<td>{{ s.a_cargo }}</td>
+<td>{{ s.descripcion }}</td>
 
 {% endif %}
 

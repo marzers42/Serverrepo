@@ -5,6 +5,7 @@ from .utils import encriptar_password
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+import csv
 # Create your views here.
 
 @login_required
@@ -72,6 +73,50 @@ def eliminar_virtual(request, id):
     servidor.delete()
 
     return redirect("lista_virtuales")
+
+
+def subir_csv(request):
+    if request.method == "POST":
+        archivo = request.FILES.get('archivo')
+
+        if not archivo:
+            return render(request, 'inventario/upload_csv.html', {
+                'mensaje': 'No se seleccionó archivo'
+            })
+
+        try:
+            decoded_file = archivo.read().decode('utf-8').splitlines()
+            reader = csv.DictReader(decoded_file)
+
+            for row in reader:
+
+                # Obtener relaciones
+                sede = Sede.objects.get(nombre=row['sede'])
+                hipervisor = Hipervisor.objects.get(nombre=row['hipervisor'])
+                sistema = SistemaOperativo.objects.get(nombre=row['sistema_operativo'])
+
+                # Crear servidor
+                ServidorVirtual.objects.create(
+                    nombre=row['nombre'],
+                    ip_int=row['ip_int'],
+                    cpu=row['cpu'],
+                    memoria_ram=row['memoria_ram'],
+                    almacenamiento=row.get('almacenamiento', 0),
+                    sede=sede,
+                    hipervisor=hipervisor,
+                    sistema_operativo=sistema
+                )
+
+            return render(request, 'inventario/upload_csv.html', {
+                'mensaje': 'Archivo cargado correctamente'
+            })
+
+        except Exception as e:
+            return render(request, 'inventario/upload_csv.html', {
+                'mensaje': f'Error: {str(e)}'
+            })
+
+    return render(request, 'inventario/upload_csv.html')
     #equipos = Servidores_Virtuales.objects.all()
     #context = {
     #    "Servidores Vituales": Servidores_Virtuales

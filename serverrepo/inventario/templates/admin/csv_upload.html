@@ -1,13 +1,16 @@
-{% extends "admin/base_site.html" %}
+{% extends "admin/change_list.html" %}
 
-{% block content %}
+{% block object-tools %}
 
-<h2>Subir archivo CSV</h2>
+{{ block.super }}
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Subir</button>
-</form>
+<li>
+    <a href="{% url 'subir_csv' %}" class="btn btn-info mb-3">Subir archivo CSV</a>
+</li>
 
 {% endblock %}
+
+
+
+
+

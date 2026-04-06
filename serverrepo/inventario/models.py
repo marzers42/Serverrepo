@@ -96,9 +96,9 @@ class ServidorVirtual(models.Model):
     puertos_ext=models.CharField(max_length=100, blank=True)
     mac_addres=models.CharField(max_length=20, blank=True)
     # Caracteristicas Tecnicas
-    cpu = models.IntegerField(null=True, blank=True)
-    memoria_ram = models.IntegerField(null=True, blank=True)
-    almacenamiento = models.IntegerField(null=True, blank=True)
+    cpu = models.FloatField(null=True, blank=True)
+    memoria_ram = models.FloatField(null=True, blank=True)
+    almacenamiento = models.FloatField(null=True, blank=True)
     # Campo de Descripcion
     descripcion=models.TextField(blank=True)
     # Documento de resguardo del servidor
